@@ -16,10 +16,12 @@ window.Vue = require('vue').default;
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+const files = require.context('./', true, /\.vue$/i)
+files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+// Vueコンポーネントが自動で登録されるようになる
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+/** Vue.component('example-component', require('./components/ExampleComponent.vue').default); **/
+// ExampleComponentのみを登録するために使われていた、１つだけ登録したい場合がある可能性があるためコメントアウトとして残しておく
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
