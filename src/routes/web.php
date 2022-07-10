@@ -22,4 +22,5 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('user/index', [App\Http\Controllers\UserController::class, 'getAllUsers'])->name('userIndex');
+    Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'getUserById'])->name('userShow');
 });

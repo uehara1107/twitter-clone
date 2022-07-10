@@ -12,4 +12,9 @@ class UserController extends Controller
         $users = User::All();
         return view('user.index', ['users' => $users]);
     }
+
+    public function getUserById($id){
+        $user = User::find($id);
+        return view('user.show', ['user' => $user]);
+    }
 }
