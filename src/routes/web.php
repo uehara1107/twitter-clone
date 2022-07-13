@@ -23,5 +23,5 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::resource('users', UserController::class)->only(['index', 'show', 'edit', 'update']);
+    Route::resource('users', UserController::class)->only(['index', 'show', 'edit', 'update'])->names(['index' => 'users.index']);
 });
