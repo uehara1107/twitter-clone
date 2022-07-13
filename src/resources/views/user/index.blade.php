@@ -8,9 +8,9 @@
                     <div class="card">
                         <div class="card-haeder p-3 w-100 d-flex">
                             <img src="{{ $user->profile_image }}" class="rounded-circle" width="50" height="50">
-                            <div class="ml-2 d-flex flex-column">
-                                <p class="mb-0">{{ $user->name }}</p>
-                                <a href="{{ url('users/' .$user->id) }}" class="text-secondary">{{ $user->screen_name }}</a>
+                            <div>
+                                <p class="p-2">{{ $user->name }}</p>
+                                <a href="{{ url('users/' .$user->id) }}" class="text-secondary">{{ $user->screen_id }}</a>
                             </div>
                         </div>
                     </div>
