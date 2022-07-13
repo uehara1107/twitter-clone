@@ -16,9 +16,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     // ユーザーの取得
     public function index(User $user)
     {
         $all_users = $user->getAllUsers(auth()->user()->id);
+        //getAllUsers->自分以外のユーザーの取得
 
         return view('user.index', [
             'all_users'  => $all_users
@@ -89,5 +92,31 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // フォロー
+    public function follow(User $user)
+    {
+        $userInfo = auth()->user();
+        // フォローしているか
+        $is_following = $userInfo->isFollowing($user->id);
+        if(!$is_following) {
+            // フォローしていなければフォローする
+            $userInfo->follow($user->id);
+            return back();
+        }
+    }
+
+    // フォロー解除
+    public function unfollow(User $user)
+    {
+        $userInfo = auth()->user();
+        // フォローしているか
+        $is_following = $userInfo->isFollowing($user->id);
+        if($is_following) {
+            // フォローしていればフォローを解除する
+            $userInfo->unfollow($user->id);
+            return back();
+        }
     }
 }
