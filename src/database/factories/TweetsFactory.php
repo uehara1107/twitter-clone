@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TweetFactory extends Factory
+class TweetsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,7 +14,10 @@ class TweetFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id'    => 1,
+            'text'       => $this->faker->realText($maxNbChars = 140, $indexSize = 2),
+            'created_at' => now(),
+            'updated_at' => now()
         ];
     }
 }
