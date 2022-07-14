@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use App\Models\User;
 use App\Models\Tweets;
 use App\Models\Followers;
+use App\Http\Request\UserEditRequest;
 
 class UserController extends Controller
 {
@@ -82,11 +83,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('user.edit', [
+            'user' => $user
+        ]);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -134,6 +136,14 @@ class UserController extends Controller
             $userInfo->unfollow($user->id);
             return back();
         }
+    }
+
+    public function userInfoUpdate(UserEditRequest $request, User $user)
+    {
+        $userInfo = $request->all();
+        $user->updateProfile($data);
+
+        return redirect('users/'.$user->id);
     }
 
     
