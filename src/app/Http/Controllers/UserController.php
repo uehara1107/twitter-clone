@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\User;
-use App\Models\Tweet;
 use App\Models\Follower;
 
 class UserController extends Controller
@@ -20,11 +19,11 @@ class UserController extends Controller
      // ユーザーの取得
     public function index(User $user)
     {
-        $all_users = $user->getAllUsers(auth()->user()->id);
-        //getAllUsers->自分以外のユーザーの取得
+        $allUsers = $user->fetchAllUsers(auth()->user()->id);
+        //fetchAllUsers->自分以外のユーザーの取得
 
         return view('user.index', [
-            'all_users'  => $all_users
+            'allUsers'  => $allUsers
         ]);
     }
 
@@ -99,8 +98,8 @@ class UserController extends Controller
     {
         $userInfo = auth()->user();
         // フォローしているか
-        $is_following = $userInfo->isFollowing($user->id);
-        if(!$is_following) {
+        $isFollowing = $userInfo->isFollowing($user->id);
+        if(!$isFollowing) {
             // フォローしていなければフォローする
             $userInfo->follow($user->id);
             return back();
@@ -108,14 +107,14 @@ class UserController extends Controller
     }
 
     // フォロー解除
-    public function unfollow(User $user)
+    public function unFollow(User $user)
     {
         $userInfo = auth()->user();
         // フォローしているか
-        $is_following = $userInfo->isFollowing($user->id);
-        if($is_following) {
+        $isFollowing = $userInfo->isFollowing($user->id);
+        if($isFollowing) {
             // フォローしていればフォローを解除する
-            $userInfo->unfollow($user->id);
+            $userInfo->unFollow($user->id);
             return back();
         }
     }

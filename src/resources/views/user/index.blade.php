@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                @foreach ($all_users as $user)
+                @foreach ($allUsers as $user)
                     <div class="card">
                         <div class="card-haeder p-3 w-100 d-flex">
                             <img src="{{ $user->profile_image }}" class="rounded-circle" width="50" height="50">
@@ -19,7 +19,7 @@
                             @endif
                             <div class="d-flex justify-content-end flex-grow-1">
                                 @if (auth()->user()->isFollowing($user->id))
-                                    <form action="{{ route('unfollow', $user->id) }}" method="POST">
+                                    <form action="{{ route('unFollow', $user->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
 
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="my-4 d-flex justify-content-center">
-            {{ $all_users->links('pagination::bootstrap-4') }}
+            {{ $allUsers->links('pagination::bootstrap-4') }}
         </div>
     </div>
 @endsection
