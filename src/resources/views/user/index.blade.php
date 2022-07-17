@@ -7,7 +7,13 @@
                 @foreach ($allUsers as $user)
                     <div class="card">
                         <div class="card-haeder p-3 w-100 d-flex">
-                            <img src="{{ $user->profile_image }}" class="rounded-circle" width="50" height="50">
+                            <div>
+                                @if (($user->profile_image) != null)
+                                    <img src="{{ $user->profile_image }}" class="rounded-circle" width="50" height="50">
+                                @else
+                                    <img src="{{ asset('img/noimage.png') }}" class="rounded-circle" width="50" height="50">
+                                @endif
+                            </div>
                             <div>
                                 <p class="p-2">{{ $user->name }}</p>
                                 <a href="{{ route('users.index', $user->id) }}" class="text-secondary">{{ $user->screen_id }}</a>
