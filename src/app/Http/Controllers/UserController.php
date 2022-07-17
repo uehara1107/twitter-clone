@@ -94,6 +94,15 @@ class UserController extends Controller
     }
 
     // フォロー
+    /**
+     * フォローするための関数
+     * 
+     * @ver userInfo Authに保存済みのユーザーの情報
+     * @ver isFollowing ユーザーがフォローしているユーザーid
+     * 
+     * @param $user ユーザー情報
+     * @return void
+     */
     public function follow(User $user)
     {
         $userInfo = auth()->user();
@@ -108,6 +117,15 @@ class UserController extends Controller
     }
 
     // フォロー解除
+    /**
+     * フォロー解除のための関数
+     * 
+     * @ver userInfo Authに保存済みのユーザーの情報
+     * @ver isFollowing ユーザーがフォローしているユーザーid
+     * 
+     * @param $user ユーザー情報
+     * @return void
+     */
     public function unFollow(User $user)
     {
         $userInfo = auth()->user();

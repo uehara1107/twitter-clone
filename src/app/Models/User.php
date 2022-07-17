@@ -45,11 +45,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // 誰が誰のフォロワーかを結びつける
     public function followers()
     {
         return $this->belongsToMany(self::class, 'followers', 'followed_id', 'following_id');
     }
 
+    //　誰をフォローしているかを結びつける
     public function follows()
     {
         return $this->belongsToMany(self::class, 'followers', 'following_id', 'followed_id');
