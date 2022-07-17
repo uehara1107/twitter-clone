@@ -10,7 +10,7 @@
                             <img src="{{ $user->profile_image }}" class="rounded-circle" width="50" height="50">
                             <div>
                                 <p class="p-2">{{ $user->name }}</p>
-                                <a href="{{ url('users/' .$user->id) }}" class="text-secondary">{{ $user->screen_id }}</a>
+                                <a href="{{ route('users.index', $user->id) }}" class="text-secondary">{{ $user->screen_id }}</a>
                             </div>
                             @if (auth()->user()->isFollowed($user->id))
                                 <div class="px-2">
