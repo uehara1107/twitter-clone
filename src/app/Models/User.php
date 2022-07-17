@@ -12,6 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
     /**
      * The attributes that are mass assignable.
      *
@@ -57,7 +58,8 @@ class User extends Authenticatable
     //自分以外のユーザー一覧を返す
     public function fetchAllUsers(Int $userId)
     {
-        return $this->Where('id', '<>', $userId)->paginate(5);
+        $displayUser = '5';
+        return $this->Where('id', '<>', $userId)->paginate($displayUser);
     }
 
     // フォローする
@@ -73,13 +75,13 @@ class User extends Authenticatable
     }
 
     // フォローしているか
-    public function isFollowing(Int $userId) 
+    public function isFollowing(Int $userId):bool 
     {
         return (boolean) $this->follows()->where('followed_id', $userId)->first(['id']);
     }
 
     // フォローされているか
-    public function isFollowed(Int $userId) 
+    public function isFollowed(Int $userId):bool
     {
         return (boolean) $this->followers()->where('following_id', $userId)->first(['id']);
     }

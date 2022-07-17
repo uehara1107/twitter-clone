@@ -104,6 +104,7 @@ class UserController extends Controller
             $userInfo->follow($user->id);
             return back();
         }
+        return back();
     }
 
     // フォロー解除
@@ -117,5 +118,6 @@ class UserController extends Controller
             $userInfo->unFollow($user->id);
             return back();
         }
+        return back();
     }
 }
