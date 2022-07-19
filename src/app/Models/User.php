@@ -12,6 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
     /**
      * The attributes that are mass assignable.
      *
@@ -44,43 +45,48 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // 誰が誰のフォロワーかを結びつける
     public function followers()
     {
         return $this->belongsToMany(self::class, 'followers', 'followed_id', 'following_id');
     }
 
+    //　誰をフォローしているかを結びつける
     public function follows()
     {
         return $this->belongsToMany(self::class, 'followers', 'following_id', 'followed_id');
     }
 
     //自分以外のユーザー一覧を返す
-    public function getAllUsers(Int $user_id)
+    //@param int $userId
+    //@return ５個ずつのユーザーコレクション
+    public function fetchAllUsers(Int $userId)
     {
-        return $this->Where('id', '<>', $user_id)->paginate(5);
+        $displayUser = '5';
+        return $this->Where('id', '<>', $userId)->paginate($displayUser);
     }
 
     // フォローする
-    public function follow(Int $user_id) 
+    public function follow(Int $userId) 
     {
-        return $this->follows()->attach($user_id);
+        return $this->follows()->attach($userId);
     }
 
     // フォロー解除する
-    public function unfollow(Int $user_id)
+    public function unFollow(Int $userId)
     {
-        return $this->follows()->detach($user_id);
+        return $this->follows()->detach($userId);
     }
 
     // フォローしているか
-    public function isFollowing(Int $user_id) 
+    public function isFollowing(Int $userId):bool 
     {
-        return (boolean) $this->follows()->where('followed_id', $user_id)->first(['id']);
+        return (boolean) $this->follows()->where('followed_id', $userId)->first(['id']);
     }
 
     // フォローされているか
-    public function isFollowed(Int $user_id) 
+    public function isFollowed(Int $userId):bool
     {
-        return (boolean) $this->followers()->where('following_id', $user_id)->first(['id']);
+        return (boolean) $this->followers()->where('following_id', $userId)->first(['id']);
     }
 }

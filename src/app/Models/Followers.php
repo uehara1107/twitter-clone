@@ -9,10 +9,7 @@ use App\Models\User;
 class Followers extends Model
 {
     use HasFactory;
-    protected $primaryKey = [
-        'following_id',
-        'followed_id'
-    ];
+
     protected $fillable = [
         'following_id',
         'followed_id'

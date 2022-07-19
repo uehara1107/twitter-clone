@@ -4,13 +4,19 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                @foreach ($all_users as $user)
+                @foreach ($allUsers as $user)
                     <div class="card">
                         <div class="card-haeder p-3 w-100 d-flex">
-                            <img src="{{ $user->profile_image }}" class="rounded-circle" width="50" height="50">
+                            <div>
+                                @if (($user->profile_image) != null)
+                                    <img src="{{ $user->profile_image }}" class="rounded-circle" width="50" height="50">
+                                @else
+                                    <img src="{{ asset('img/noimage.png') }}" class="rounded-circle" width="50" height="50">
+                                @endif
+                            </div>
                             <div>
                                 <p class="p-2">{{ $user->name }}</p>
-                                <a href="{{ url('users/' .$user->id) }}" class="text-secondary">{{ $user->screen_id }}</a>
+                                <a href="{{ route('users.index', $user->id) }}" class="text-secondary">{{ $user->screen_id }}</a>
                             </div>
                             @if (auth()->user()->isFollowed($user->id))
                                 <div class="px-2">
@@ -19,7 +25,7 @@
                             @endif
                             <div class="d-flex justify-content-end flex-grow-1">
                                 @if (auth()->user()->isFollowing($user->id))
-                                    <form action="{{ route('unfollow', $user->id) }}" method="POST">
+                                    <form action="{{ route('unFollow', $user->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
 
@@ -38,7 +44,7 @@
             </div>
         </div>
         <div class="my-4 d-flex justify-content-center">
-            {{ $all_users->links('pagination::bootstrap-4') }}
+            {{ $allUsers->links('pagination::bootstrap-4') }}
         </div>
     </div>
 @endsection

@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 
 class UserFactory extends Factory
 {
+    const RANDNUMKEY = '5';
     /**
      * Define the model's default state.
      *
@@ -14,7 +15,7 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $rmNum = Str::random(5);
+        $rmNum = Str::random(RANDNUMKEY);
         return [
             'screen_id' => 'name'.$rmNum,
             'name' => $this->faker->name(),

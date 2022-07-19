@@ -14,17 +14,18 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $user ユーザー情報
      * @return \Illuminate\Http\Response
+     * @return ユーザー一覧のView
      */
 
-     // ユーザーの取得
     public function index(User $user)
     {
-        $all_users = $user->getAllUsers(auth()->user()->id);
-        //getAllUsers->自分以外のユーザーの取得
+        $allUsers = $user->fetchAllUsers(auth()->user()->id);
+        //fetchAllUsers->自分以外のユーザーの取得
 
         return view('user.index', [
-            'all_users'  => $all_users
+            'allUsers'  => $allUsers
         ]);
     }
 
@@ -111,29 +112,49 @@ class UserController extends Controller
     }
 
     // フォロー
+    /**
+     * フォローするための関数
+     * 
+     * @ver userInfo Authに保存済みのユーザーの情報
+     * @ver isFollowing ユーザーがフォローしているユーザーid
+     * 
+     * @param $user ユーザー情報
+     * @return 直前ページURI RedirectResponseクラス
+     */
     public function follow(User $user)
     {
         $userInfo = auth()->user();
         // フォローしているか
-        $is_following = $userInfo->isFollowing($user->id);
-        if(!$is_following) {
+        $isFollowing = $userInfo->isFollowing($user->id);
+        if(!$isFollowing) {
             // フォローしていなければフォローする
             $userInfo->follow($user->id);
             return back();
         }
+        return back();
     }
 
     // フォロー解除
-    public function unfollow(User $user)
+    /**
+     * フォロー解除のための関数
+     * 
+     * @ver userInfo Authに保存済みのユーザーの情報
+     * @ver isFollowing ユーザーがフォローしているユーザーid
+     * 
+     * @param $user ユーザー情報
+     * @return 直前ページURI RedirectResponseクラス
+     */
+    public function unFollow(User $user)
     {
         $userInfo = auth()->user();
         // フォローしているか
-        $is_following = $userInfo->isFollowing($user->id);
-        if($is_following) {
+        $isFollowing = $userInfo->isFollowing($user->id);
+        if($isFollowing) {
             // フォローしていればフォローを解除する
-            $userInfo->unfollow($user->id);
+            $userInfo->unFollow($user->id);
             return back();
         }
+        return back();
     }
 
     
