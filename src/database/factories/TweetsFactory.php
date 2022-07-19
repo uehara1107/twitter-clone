@@ -13,8 +13,9 @@ class TweetsFactory extends Factory
      */
     public function definition()
     {
+        $tweetUserId = 11;
         return [
-            'user_id'    => 1,
+            'user_id'    => $tweetUserId,
             'text'       => $this->faker->realText($maxNbChars = 140, $indexSize = 2),
             'created_at' => now(),
             'updated_at' => now()

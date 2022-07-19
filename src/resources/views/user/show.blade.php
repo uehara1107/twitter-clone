@@ -22,7 +22,7 @@
                         <div class="d-flex">
                             <div>
                                 @if ($user->id === Auth::user()->id)
-                                    <a href="{{ url('users/' .$user->id .'/edit') }}" class="btn btn-primary">プロフィールを編集する</a>
+                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">プロフィールを編集する</a>
                                 @else
                                     @if ($is_following)
                                         <form action="{{ route('unFollow', $user->id) }}" method="POST">
@@ -68,10 +68,14 @@
                 <div class="col-md-8 mb-3">
                     <div class="card">
                         <div class="card-haeder p-3 w-100 d-flex">
-                            <img src="{{ $user->profile_image }}" class="rounded-circle" width="50" height="50">
+                            @if (($user->profile_image) != null)
+                                <img src="{{ $user->profile_image }}" class="rounded-circle" width="50" height="50">
+                            @else
+                                <img src="{{ asset('img/noimage.png') }}" class="rounded-circle" width="50" height="50">
+                            @endif
                             <div class="ml-2 d-flex flex-column flex-grow-1">
                                 <p class="mb-0">{{ $timeline->user->name }}</p>
-                                <a href="{{ url('users/' .$timeline->user->id) }}" class="text-secondary">{{ $timeline->user->screen_id }}</a>
+                                <a href="{{ route('users.show' ,$timeline->user->id) }}" class="text-secondary">{{ $timeline->user->screen_id }}</a>
                             </div>
                             <div class="d-flex justify-content-end flex-grow-1">
                                 <p class="mb-0 text-secondary">{{ $timeline->created_at->format('Y-m-d H:i') }}</p>
@@ -79,24 +83,6 @@
                         </div>
                         <div class="card-body">
                             {{ $timeline->text }}
-                        </div>
-                        <div class="card-footer py-1 d-flex justify-content-end bg-white">
-                            @if ($timeline->user->id === Auth::user()->id)
-                                <div class="dropdown mr-3 d-flex align-items-center">
-                                    <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-fw"></i>
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <form method="POST" action="{{ url('tweets/' .$timeline->id) }}" class="mb-0">
-                                            @csrf
-                                            @method('DELETE')
-
-                                            <a href="{{ url('tweets/' .$timeline->id .'/edit') }}" class="dropdown-item">編集</a>
-                                            <button type="submit" class="dropdown-item del-btn">削除</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            @endif
                         </div>
                     </div>
                 </div>
