@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +19,4 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function(){
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::resource('users', UserController::class)->only(['index', 'show', 'edit', 'update'])->names(['index' => 'users.index']);
-    Route::post('users/{user}/follow', [UserController::class, 'follow'])->name('follow');
-    Route::delete('users/{user}/unFollow', [UserController::class, 'unFollow'])->name('unFollow');
-});
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
