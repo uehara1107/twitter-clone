@@ -13,10 +13,11 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $user ユーザー情報
      * @return \Illuminate\Http\Response
+     * @return ユーザー一覧のView
      */
 
-     // ユーザーの取得
     public function index(User $user)
     {
         $allUsers = $user->fetchAllUsers(auth()->user()->id);
@@ -101,7 +102,7 @@ class UserController extends Controller
      * @ver isFollowing ユーザーがフォローしているユーザーid
      * 
      * @param $user ユーザー情報
-     * @return void
+     * @return 直前ページURI RedirectResponseクラス
      */
     public function follow(User $user)
     {
@@ -124,7 +125,7 @@ class UserController extends Controller
      * @ver isFollowing ユーザーがフォローしているユーザーid
      * 
      * @param $user ユーザー情報
-     * @return void
+     * @return 直前ページURI RedirectResponseクラス
      */
     public function unFollow(User $user)
     {

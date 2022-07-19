@@ -58,6 +58,8 @@ class User extends Authenticatable
     }
 
     //自分以外のユーザー一覧を返す
+    //@param int $userId
+    //@return ５個ずつのユーザーコレクション
     public function fetchAllUsers(Int $userId)
     {
         $displayUser = '5';
