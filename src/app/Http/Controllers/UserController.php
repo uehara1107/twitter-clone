@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\User;
-use App\Models\Follower;
+use App\Models\Tweets;
+use App\Models\Followers;
 
 class UserController extends Controller
 {
@@ -55,9 +56,25 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user, Tweets $tweets, Followers $followers)
     {
-        //
+        $login_user = auth()->user();
+        $is_following = $login_user->isFollowing($user->id);
+        $is_followed = $login_user->isFollowed($user->id);
+        $timelines = $tweets->getUserTimeLine($user->id);
+        $tweet_count = $tweets->getTweetCount($user->id);
+        $follow_count = $followers->getFollowCount($user->id);
+        $follower_count = $followers->getFollowerCount($user->id);
+
+        return view('user.show', [
+            'user'           => $user,
+            'is_following'   => $is_following,
+            'is_followed'    => $is_followed,
+            'timelines'      => $timelines,
+            'tweet_count'    => $tweet_count,
+            'follow_count'   => $follow_count,
+            'follower_count' => $follower_count
+        ]);
     }
 
     /**

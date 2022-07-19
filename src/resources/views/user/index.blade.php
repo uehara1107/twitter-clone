@@ -16,7 +16,7 @@
                             </div>
                             <div>
                                 <p class="p-2">{{ $user->name }}</p>
-                                <a href="{{ route('users.index', $user->id) }}" class="text-secondary">{{ $user->screen_id }}</a>
+                                <a href="{{ route('users.show', $user->id) }}" class="text-secondary">{{ $user->screen_id }}</a>
                             </div>
                             @if (auth()->user()->isFollowed($user->id))
                                 <div class="px-2">
